@@ -23,11 +23,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.openjdk.jmc.common.unit.IConstrainedMap;
+import org.openjdk.jmc.flightrecorder.configuration.IFlightRecorderService;
+import org.openjdk.jmc.flightrecorder.configuration.events.EventConfiguration;
 import org.openjdk.jmc.flightrecorder.configuration.events.EventOptionID;
-import org.openjdk.jmc.flightrecorder.controlpanel.ui.configuration.model.xml.XMLModel;
-import org.openjdk.jmc.flightrecorder.controlpanel.ui.model.EventConfiguration;
-import org.openjdk.jmc.rjmx.ServiceNotAvailableException;
-import org.openjdk.jmc.rjmx.services.jfr.IFlightRecorderService;
+import org.openjdk.jmc.flightrecorder.configuration.model.xml.XMLModel;
+import org.openjdk.jmc.rjmx.common.ServiceNotAvailableException;
 
 import io.cryostat.core.FlightRecorderException;
 import io.cryostat.core.log.Logger;
@@ -82,7 +82,7 @@ public class RemoteTemplateService extends AbstractTemplateService {
                                 return configuration.attr("label").equals(templateName);
                             })
                     .findFirst();
-        } catch (org.openjdk.jmc.rjmx.services.jfr.FlightRecorderException
+        } catch (org.openjdk.jmc.flightrecorder.configuration.FlightRecorderException
                 | IOException
                 | ServiceNotAvailableException e) {
             throw new FlightRecorderException("Could not get XML", e);
@@ -135,7 +135,7 @@ public class RemoteTemplateService extends AbstractTemplateService {
                             })
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
-        } catch (org.openjdk.jmc.rjmx.services.jfr.FlightRecorderException
+        } catch (org.openjdk.jmc.flightrecorder.configuration.FlightRecorderException
                 | IOException
                 | ServiceNotAvailableException e) {
             throw new FlightRecorderException("Could not get template models", e);
